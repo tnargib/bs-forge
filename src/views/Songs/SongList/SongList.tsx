@@ -29,7 +29,9 @@ const SongList: React.FC<Props> = props => {
             <p>{song.metadata.songAuthorName}</p>
             <p>{song.metadata.levelAuthorName}</p>
             {difficulties(song).map((diff: string) => (
-              <span key={diff} className={cx(classes.difficultyTag)}>{diff}</span>
+              <span key={diff} className={cx(classes.difficultyTag)}>
+                {diff}
+              </span>
             ))}
           </div>
         </div>
