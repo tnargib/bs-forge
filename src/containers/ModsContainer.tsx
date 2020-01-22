@@ -3,18 +3,17 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import { observer } from "mobx-react";
 
 import { useStores } from "../services/mobx/useStores";
-import { SongSortOrder } from "../services/apis/BeatSaverApi";
 
-import SongList from "../views/Songs/SongList/SongList";
+import ModList from "../views/Mods/ModList/ModList";
 
 const ModsContainer: React.FC = () => {
-  const { songStore } = useStores();
+  const { modStore } = useStores();
 
   useEffect(() => {
-    songStore.loadSongs(SongSortOrder.Rating);
-  }, [songStore]);
+    modStore.searchMods("song");
+  }, [modStore]);
 
-  return <div>coucou</div>;
+  return <ModList mods={modStore.allMods} />;
 };
 
 export default observer(ModsContainer);

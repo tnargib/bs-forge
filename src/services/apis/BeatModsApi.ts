@@ -1,6 +1,15 @@
 import axios, { AxiosInstance } from "axios";
+import { reject, isNil } from "ramda";
 
-export interface Mod {
+export enum ModStatus {
+  Approved = "approved",
+  Declined = "declined",
+  Pending = "pending",
+  Inactive = "inactive",
+}
+
+export interface ModBase {
+  _id: string;
   name: string;
   version: string;
   gameVersion: string;
@@ -12,51 +21,31 @@ export interface Mod {
     username: string;
     lastLogin: string;
   };
-  status: string;
+  status: ModStatus;
   description: string;
   link: string;
   category: string;
-  downloads: {
-    type: string;
-    url: string;
-    hashMd5: {
-      hash: string;
-      file: string;
-    }[];
-  }[];
-  required: boolean;
-  dependencies: {
-    _id: string;
-    name: string;
-    description: string;
-    authorId: string;
-    version: string;
-    gameVersion: string;
-    link: string;
-    updatedDate: string;
-    uploadDate: string;
-    status: string;
-    downloads: {
+  downloads: [
+    {
       type: string;
       url: string;
-      hashMd5: {
-        hash: string;
-        file: string;
-      }[];
-    }[];
-    category: string;
-    required: boolean;
-    dependencies: string[];
-  }[];
-  _id: string;
+      hashMd5: [
+        {
+          hash: string;
+          file: string;
+        },
+      ];
+    },
+  ];
+  required: boolean;
 }
 
-export enum SongSortOrder {
-  Hot = "hot",
-  Latest = "latest",
-  Rating = "rating",
-  Download = "downloads",
-  Played = "plays",
+export interface ModLite extends ModBase {
+  dependencies: string[];
+}
+
+export interface Mod extends ModBase {
+  dependencies: ModLite[];
 }
 
 export default class BeatModsApi {
@@ -68,9 +57,17 @@ export default class BeatModsApi {
     });
   }
 
-  async listMods(status, gameVersion, name, category, hash): Promise<SongPage> {
+  async listMods(filters: {
+    status?: ModStatus;
+    gameVersion: string;
+    name?: string;
+    category?: string;
+    hash?: string;
+  }): Promise<Mod[]> {
     try {
-      const res = await this.client.get<SongPage>(`/api/maps/${order}/${page}`);
+      const res = await this.client.get<Mod[]>(`/api/v1/mod`, {
+        params: reject(isNil, filters),
+      });
       return res.data;
     } catch (error) {
       throw error.response;

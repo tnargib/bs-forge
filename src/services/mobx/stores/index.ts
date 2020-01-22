@@ -1,3 +1,4 @@
+import ModStore from "./ModStore";
 import SongStore from "./SongStore";
 
-export { SongStore };
+export { ModStore, SongStore };
