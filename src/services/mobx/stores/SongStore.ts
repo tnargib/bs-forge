@@ -1,28 +1,27 @@
-import { decorate, observable, computed, action } from "mobx";
-import { pluck, flatten } from "ramda";
+import { decorate, observable, action, computed, toJS } from "mobx";
 
-import BeatSaverApi, { Song, SongPage, SongSortOrder } from "../../apis/BeatSaverApi";
+import BeatSaverApi, { SongPage, SongSortOrder } from "../../apis/BeatSaverApi";
 
 const BEAT_SAVER = new BeatSaverApi();
 
 class SongStore {
   pages: SongPage[] = [];
 
-  get allSongs(): Song[] {
-    return flatten(pluck("docs", this.pages));
+  get songPages() {
+    return toJS(this.pages);
   }
 
-  loadSongs(order: SongSortOrder, page = 0): void {
+  loadSongs = (order: SongSortOrder, page = 0): void => {
     BEAT_SAVER.listSongs(order, page).then(songPage => {
-      this.pages[page] = songPage;
+      this.pages.splice(page, 1, songPage);
     });
-  }
+  };
 }
 
 decorate(SongStore, {
   pages: observable,
-  allSongs: computed,
-  loadSongs: action,
+  songPages: computed,
+  loadSongs: action.bound,
 });
 
-export default SongStore;
+export default new SongStore();
