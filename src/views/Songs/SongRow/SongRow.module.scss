@@ -1,0 +1,42 @@
+$row-height: 120px;
+
+.container {
+    display: flex;
+    height: $row-height;
+    margin-bottom: 40px;
+    h3 {
+        margin-top: 0;
+    }
+}
+
+.cover {
+    width: $row-height;
+    height: $row-height;
+    flex-shrink: 0;
+    border-radius: 15px;
+    box-shadow: 0px 5px 20px 0px rgba(0,0,0,.5);
+    overflow: hidden;
+}
+.cover img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+}
+
+.difficultyTag {
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 10px;
+    background: cyan;
+    margin-right: 10px;
+    font-size: .8em;
+  }
