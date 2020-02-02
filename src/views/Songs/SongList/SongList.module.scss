@@ -1,0 +1,17 @@
+.filters {
+  display: flex;
+  justify-content: flex-end;
+  // padding: 15px;
+  // background-color: var(--primary-color);
+  // border-radius: 15px;
+  & > * {
+    margin-left: 8px;
+    text-transform: uppercase;
+  }
+  & > div {
+    &.active {
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--primary-color);
+    }
+  }
+}

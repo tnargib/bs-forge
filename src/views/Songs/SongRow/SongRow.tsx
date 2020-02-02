@@ -12,13 +12,18 @@ const cx = classNames.bind(styles);
 
 type Props = {
   song: Song;
+  onSelectSong: (song: Song) => void;
 };
 
-const SongRow: React.FC<Props> = ({ song }) => {
+const SongRow: React.FC<Props> = ({ song, onSelectSong }) => {
+  const selectSong = () => {
+    onSelectSong(song);
+  };
+
   const difficulties = pipe(path(["metadata", "difficulties"]), reject(equals(false)), keys);
 
   return (
-    <div className={cx("container")}>
+    <div className={cx("container")} onClick={selectSong}>
       <div className={cx("cover")}>
         <img src={process.env.REACT_APP_BEATSAVER_URL + song.coverURL} alt="" />
       </div>
@@ -26,7 +31,6 @@ const SongRow: React.FC<Props> = ({ song }) => {
         <h3>{song.name}</h3>
         <span>{song.metadata.songAuthorName}</span>
         <span>{song.metadata.levelAuthorName}</span>
-        <Button icon="truc">Coucou</Button>
         <div className={cx("difficulties")}>
           {difficulties(song).map((diff: string) => (
             <span key={diff} className={cx("difficultyTag")}>

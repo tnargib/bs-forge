@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import tc from "tinycolor2";
 
 export type Theme = {
@@ -29,6 +29,17 @@ const ThemeContext = React.createContext<ThemeContext>({
 });
 ThemeContext.displayName = "ThemeContext";
 
+const updateCSSVars = (theme: ThemeFull) => {
+  const root = document.documentElement;
+  const rootComputedStyle = getComputedStyle(root);
+  for (const key in theme) {
+    const current = rootComputedStyle.getPropertyValue(key);
+    if (current !== theme[key]) {
+      root.style.setProperty(key, theme[key]);
+    }
+  }
+};
+
 export const ThemeProvider: React.FC = props => {
   const [theme, updateTheme] = useState<ThemeFull>(defaultTheme);
 
@@ -46,15 +57,7 @@ export const ThemeProvider: React.FC = props => {
     const computed = _computeStyles(newTheme);
     const fullTheme = Object.assign(newTheme, computed);
 
-    const root = document.documentElement;
-    const rootComputedStyle = getComputedStyle(root);
-    for (const key in fullTheme) {
-      const current = rootComputedStyle.getPropertyValue(key);
-      if (current !== fullTheme[key]) {
-        root.style.setProperty(key, fullTheme[key]);
-      }
-    }
-
+    updateCSSVars(fullTheme);
     updateTheme(fullTheme);
   };
 
@@ -71,3 +74,6 @@ export const ThemeProvider: React.FC = props => {
 };
 
 export const useTheme = () => React.useContext(ThemeContext);
+
+// Trigger first CSS vars
+updateCSSVars(defaultTheme);

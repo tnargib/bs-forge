@@ -1,6 +1,10 @@
 .container {
   display: flex;
 }
+.content {
+  padding: 20px;
+  flex-grow: 1;
+}
 .sidebar {
   display: flex;
   flex-direction: column;

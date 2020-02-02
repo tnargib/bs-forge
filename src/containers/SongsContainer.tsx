@@ -11,13 +11,14 @@ import SongList from "../views/Songs/SongList/SongList";
 const SongsContainer: React.FC = () => {
   const { songStore } = useStores();
 
+  const { loadSongs, order } = songStore;
   useEffect(() => {
     console.log("useEffect SongsContainer");
-    songStore.loadSongs(SongSortOrder.Rating);
-  }, [songStore]);
+    loadSongs();
+  }, [loadSongs, order]);
 
-  const loadSongs = (page = 0) => {
-    return songStore.loadSongs(SongSortOrder.Rating, page);
+  const changeOrder = (filter: SongSortOrder): void => {
+    return songStore.changeOrder(filter);
   };
 
   console.log("rerender");
@@ -25,7 +26,11 @@ const SongsContainer: React.FC = () => {
   return (
     <Switch>
       <Route path="/songs/rating">
-        <SongList pages={songStore.songPages} loadSongs={loadSongs} />
+        <SongList
+          pages={songStore.songPages}
+          loadSongs={songStore.loadSongs}
+          changeOrder={changeOrder}
+        />
       </Route>
       <Redirect to="/songs/rating" />
     </Switch>

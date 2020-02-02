@@ -20,7 +20,7 @@ const MainLayout: React.FC = () => {
 
   return (
     <div className={cx("container")}>
-      <div className={cx("sidebar")}>
+      {/* <div className={cx("sidebar")}>
         <div className={cx("menu")}>
           <NavLink to="/songs" activeClassName={cx("menuItemActive")} className={cx("menuItem")}>
             Songs
@@ -30,7 +30,7 @@ const MainLayout: React.FC = () => {
           </NavLink>
           <input type="color" onChange={_handleColor} />
         </div>
-      </div>
+      </div> */}
       <div className={cx("content")}>
         <Switch>
           <Route path="/songs">
