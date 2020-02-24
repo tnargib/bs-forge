@@ -1,12 +1,13 @@
 import { decorate, observable, action, computed, toJS } from "mobx";
 
-import BeatSaverApi, { SongPage, SongSortOrder } from "../../apis/BeatSaverApi";
+import BeatSaverApi, { SongPage, SongSortOrder, Song } from "../../apis/BeatSaverApi";
 
 const BEAT_SAVER = new BeatSaverApi();
 
 class SongStore {
   order: SongSortOrder = SongSortOrder.Latest;
   pages: SongPage[] = [];
+  currentSong?: Song = undefined;
 
   get songPages() {
     return toJS(this.pages);
@@ -24,11 +25,19 @@ class SongStore {
       this.pages = [];
     }
   };
+
+  selectSong = (song: Song): void => {
+    this.currentSong = song;
+  };
+  unselectSong = (): void => {
+    this.currentSong = undefined;
+  };
 }
 
 decorate(SongStore, {
   pages: observable,
   songPages: computed,
+  currentSong: observable,
   loadSongs: action.bound,
 });
 

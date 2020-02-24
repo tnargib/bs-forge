@@ -1,17 +1,35 @@
+.songList {
+  padding: 20px;
+  background: white;
+  box-sizing: border-box;
+}
+
 .filters {
   display: flex;
-  justify-content: flex-end;
-  // padding: 15px;
-  // background-color: var(--primary-color);
-  // border-radius: 15px;
+  align-items: center;
+  margin-bottom: 40px;
   & > * {
-    margin-left: 8px;
-    text-transform: uppercase;
+    margin-right: 20px;
   }
   & > div {
-    &.active {
-      color: var(--primary-color);
-      border-bottom: 2px solid var(--primary-color);
+    position: relative;
+    cursor: pointer;
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      margin: auto;
+      left: 0;
+      right: 0;
+      width: 0px;
+      height: 0px;
+      background: var(--primary-color);
+      border-radius: 50%;
+      transition: all 0.2s ease-in-out;
+    }
+    &.active:after {
+      width: 6px;
+      height: 6px;
     }
   }
 }
