@@ -4,6 +4,8 @@ import { pipe, keys, equals, reject, path } from "ramda";
 
 import { ThumbUp, ThumbDown, AccountCircle } from "@material-ui/icons";
 
+import Difficulties from "../../../components/Song/Difficulties/Difficulties";
+
 import { Song } from "../../../services/apis/BeatSaverApi";
 
 import styles from "./SongRow.module.scss";
@@ -20,44 +22,6 @@ const SongRow: React.FC<Props> = ({ song, onSelectSong }) => {
     onSelectSong(song);
   };
 
-  const renderDifficulties = (song: Song) => {
-    const difficulties: string[] = pipe(
-      path(["metadata", "difficulties"]),
-      reject(equals(false)),
-      keys,
-    )(song);
-
-    return difficulties.map(diff => {
-      let diffName;
-      switch (diff) {
-        case "easy":
-          diffName = "easy";
-          break;
-        case "expert":
-          diffName = "expert";
-          break;
-        case "expertPlus":
-          diffName = "expert+";
-          break;
-        case "hard":
-          diffName = "hard";
-          break;
-        case "normal":
-          diffName = "normal";
-          break;
-        case "default":
-          diffName = "unknown";
-          break;
-      }
-
-      return (
-        <span key={diff} className={cx("difficultyTag", diff)}>
-          {diffName}
-        </span>
-      );
-    });
-  };
-
   return (
     <div className={cx("container")} onClick={selectSong}>
       <div className={cx("cover")}>
@@ -72,7 +36,9 @@ const SongRow: React.FC<Props> = ({ song, onSelectSong }) => {
           <ThumbDown />
           <span>{song.stats.downVotes}</span>
         </div>
-        <div className={cx("difficulties")}>{renderDifficulties(song)}</div>
+
+        <Difficulties song={song} />
+
         <span className={cx("songUploader")}>
           <AccountCircle /> <span>{song.metadata.levelAuthorName}</span>
         </span>

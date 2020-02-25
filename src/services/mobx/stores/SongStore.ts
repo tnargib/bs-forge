@@ -27,6 +27,7 @@ class SongStore {
   };
 
   selectSong = (song: Song): void => {
+    console.log("select song", song);
     this.currentSong = song;
   };
   unselectSong = (): void => {

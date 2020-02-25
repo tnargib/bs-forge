@@ -19,6 +19,9 @@ function createWindow() {
     width: 800,
     height: 600,
     webPreferences: {
+      nodeIntegration: false, // is default value after Electron v5
+      contextIsolation: true, // protect against prototype pollution
+      enableRemoteModule: false, // turn off remote
       webSecurity: false, // BeatMods doesn't include Access-Control-Allow-Origin
     },
   });

@@ -1,6 +1,6 @@
 .btn {
   border: none;
-  text-align: left;
+  text-align: center;
   height: 30px;
   flex-shrink: 0;
   outline: none;
@@ -13,6 +13,7 @@
   &.primary {
     background: var(--primary-color);
     color: var(--primary-color-contrast);
+    box-shadow: 0 5px 12px -2px var(--primary-color);
   }
   &.round {
     padding: 0 15px;

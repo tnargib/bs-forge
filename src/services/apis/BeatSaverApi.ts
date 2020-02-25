@@ -23,6 +23,7 @@ export interface Song {
     characteristics: [
       {
         difficulties: {
+          [diff: string]: SongCharac | null;
           easy: SongCharac | null;
           normal: SongCharac | null;
           hard: SongCharac | null;

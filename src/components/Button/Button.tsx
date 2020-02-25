@@ -21,7 +21,7 @@ const Button: React.FC<Props> = ({
   icon,
   justIcon = false,
   type = "default",
-  shape = "round",
+  shape = "square",
   loading = false,
   active = false,
   onClick,
