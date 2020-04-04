@@ -6,27 +6,19 @@
   outline: none;
   box-shadow: 0 3px 5px -5px rgba(0, 0, 0, 0.5);
   cursor: pointer;
+  padding: 0 6px;
+  border-radius: 6px;
   &.default {
-    background: #ccc;
+    background: #c4c4c4;
     color: black;
+    box-shadow: 0 5px 12px -2px var(#c4c4c4);
   }
   &.primary {
     background: var(--primary-color);
     color: var(--primary-color-contrast);
     box-shadow: 0 5px 12px -2px var(--primary-color);
   }
-  &.round {
-    padding: 0 15px;
-    border-radius: 15px;
-  }
-  &.square {
-    padding: 0 6px;
-    border-radius: 6px;
-  }
   svg {
     margin-right: 10px;
-  }
-  &.justIcon svg {
-    margin: 0;
   }
 }

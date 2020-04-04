@@ -1,31 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { observer } from "mobx-react";
 import classNames from "classnames/bind";
-import { pipe, path, reject, equals, keys } from "ramda";
+import { keys, head, reject, equals, pipe } from "ramda";
+import { Line } from "rc-progress";
 
 import Button from "../../../components/Button/Button";
 import Difficulties from "../../../components/Song/Difficulties/Difficulties";
 
-import { ThumbUp, ThumbDown, AccountCircle } from "@material-ui/icons";
+import { ThumbUp, ThumbDown } from "@material-ui/icons";
 import { ReactComponent as BombIcon } from "../../../assets/img/icons/bomb.svg";
 import { ReactComponent as CubeIcon } from "../../../assets/img/icons/ice.svg";
-import { ReactComponent as TimeIcon } from "../../../assets/img/icons/speed.svg";
-import { ReactComponent as BpmIcon } from "../../../assets/img/icons/tempo.svg";
 import { ReactComponent as WallIcon } from "../../../assets/img/icons/wall.svg";
 
-import { Song } from "../../../services/apis/BeatSaverApi";
+import { useStores } from "../../../services/mobx/useStores";
 
 import styles from "./SongDetails.module.scss";
 
+import DownloadConnector from "../../../services/connectors/DownloadConnector";
+
 const cx = classNames.bind(styles);
+const DL = new DownloadConnector();
 
 type Props = {
-  song?: Song;
+  style?: React.CSSProperties;
 };
-const SongDetails: React.FC<Props> = ({ song }) => {
+const SongDetails: React.FC<Props> = ({ style }) => {
+  const { songStore } = useStores();
+  const {
+    currentSong: song,
+    currentSongAudio: audioSource,
+    currentAudioPreviewProgress: previewProgress,
+    currentSongRatings: ratings,
+  } = songStore;
+
   const [selectedDiff, setDiff] = useState<string>("easy");
 
+  useEffect(() => {
+    if (song) {
+      const diff: string = pipe(reject(equals(false)), keys, head)(song.metadata.difficulties);
+      setDiff(diff);
+    }
+  }, [song, setDiff]);
+
+  const dlSong = () => {
+    if (song)
+      DL.downloadByUrl(process.env.REACT_APP_BEATSAVER_URL + song.downloadURL).then(data => {
+        console.log("dlSong", data);
+      });
+  };
+
   return (
-    <div className={cx("songDetails")}>
+    <div className={cx("songDetails")} style={style}>
       {!song ? null : (
         <>
           <div className={cx("cover")}>
@@ -33,18 +58,35 @@ const SongDetails: React.FC<Props> = ({ song }) => {
           </div>
           <div className={cx("title")}>{song.metadata.songName}</div>
           <div className={cx("artist")}>{song.metadata.songAuthorName}</div>
-          <audio
-            className={cx("player")}
-            controls
-            src={"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"}
-          ></audio>
+
+          {audioSource ? (
+            <audio
+              className={cx("player")}
+              controls
+              controlsList="nodownload"
+              src={audioSource}
+            ></audio>
+          ) : (
+            <Line
+              className={cx("progress")}
+              percent={previewProgress || 1}
+              strokeWidth={1}
+              trailWidth={1}
+            />
+          )}
+
           <div className={cx("songLikes")}>
             <ThumbUp />
             <span>{song.stats.upVotes}</span>
             <ThumbDown />
             <span>{song.stats.downVotes}</span>
           </div>
-          <Difficulties className={cx("difficulties")} song={song} onSelectDiff={setDiff} />
+          <Difficulties
+            className={cx("difficulties")}
+            song={song}
+            selected={selectedDiff}
+            onSelectDiff={setDiff}
+          />
           <div className={cx("stats")}>
             <div className={cx("stat")}>
               <BombIcon />
@@ -60,11 +102,30 @@ const SongDetails: React.FC<Props> = ({ song }) => {
             </div>
           </div>
 
-          <Button type="primary">Download</Button>
+          {!!ratings && (
+            <div className={cx("ratings")}>
+              <div>Fun Factor</div>
+              <Line percent={(ratings.average_ratings.fun_factor / 5) * 100} />
+              <div>Rhythm</div>
+              <Line percent={(ratings.average_ratings.rhythm / 5) * 100} />
+              <div>Flow</div>
+              <Line percent={(ratings.average_ratings.flow / 5) * 100} />
+              <div>Pattern Quality</div>
+              <Line percent={(ratings.average_ratings.pattern_quality / 5) * 100} />
+              <div>Readability</div>
+              <Line percent={(ratings.average_ratings.readability / 5) * 100} />
+              <div>Level Quality</div>
+              <Line percent={(ratings.average_ratings.level_quality / 5) * 100} />
+            </div>
+          )}
+
+          <Button color="primary" onClick={dlSong}>
+            Download
+          </Button>
         </>
       )}
     </div>
   );
 };
 
-export default SongDetails;
+export default observer(SongDetails);

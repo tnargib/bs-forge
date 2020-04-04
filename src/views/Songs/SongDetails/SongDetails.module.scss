@@ -23,13 +23,12 @@
 .title {
   text-align: center;
   font-size: 1.2em;
-  margin-bottom: 10px;
 }
 .artist {
   color: #b0b0b0;
   text-align: center;
   font-weight: 300;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 .songLikes {
   display: flex;
@@ -47,6 +46,12 @@
   width: 100%;
   outline: none;
 }
+.progress {
+  margin-bottom: 20px;
+  :global(.rc-progress-line-path) {
+    stroke: var(--primary-color);
+  }
+}
 .difficulties {
   margin-bottom: 20px;
   align-self: center;
@@ -60,7 +65,7 @@
 .stats {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
   .stat {
     display: flex;
     flex-direction: column;
@@ -71,6 +76,18 @@
       width: auto;
       fill: #f6f6f6;
     }
+  }
+}
+.ratings {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: .8em;
+  :global(.rc-progress-line) {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 2px;
   }
 }
 
@@ -90,10 +107,11 @@
   background: #232323;
 }
 .closeSider {
-  position: absolute;
+  position: sticky;
   top: 5px;
   left: 5px;
   cursor: pointer;
+  z-index: 10;
   svg {
     width: 1.5em;
     height: 1.5em;

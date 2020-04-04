@@ -1,6 +1,4 @@
 import React from "react";
-import cx from "classnames";
-import { pipe, keys, equals, reject, path } from "ramda";
 
 import { Mod } from "../../../services/apis/BeatModsApi";
 

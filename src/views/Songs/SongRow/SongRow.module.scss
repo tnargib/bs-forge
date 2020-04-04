@@ -4,6 +4,7 @@ $row-height: 140px;
   display: flex;
   height: $row-height;
   margin-bottom: 40px;
+  cursor: pointer;
 }
 .content {
   justify-content: space-between;

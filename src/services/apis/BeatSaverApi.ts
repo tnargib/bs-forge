@@ -1,4 +1,5 @@
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import JSZip from "jszip";
 
 export interface SongCharac {
   duration: number;
@@ -105,6 +106,31 @@ export default class BeatSaverApi {
     try {
       const res = await this.client.get<SongPage>(`/api/maps/${order}/${page}`);
       return res.data;
+    } catch (error) {
+      throw error.response;
+    }
+  }
+
+  async downloadSongAudio(
+    url: string,
+    onDownloadProgress?: AxiosRequestConfig["onDownloadProgress"],
+  ): Promise<string | null> {
+    try {
+      const res = await this.client.get<ArrayBuffer>(url, {
+        responseType: "arraybuffer",
+        onDownloadProgress,
+      });
+
+      const zip = await JSZip.loadAsync(res.data);
+      const audioFile = zip.file(/\.(ogg|mp3|egg|wav)$/)[0];
+
+      let urlObj;
+      if (audioFile) {
+        const blob = await audioFile.async("blob");
+        urlObj = URL.createObjectURL(blob);
+      }
+
+      return urlObj || null;
     } catch (error) {
       throw error.response;
     }

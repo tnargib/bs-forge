@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
 import { observer } from "mobx-react";
 
 import { useStores } from "../services/mobx/useStores";

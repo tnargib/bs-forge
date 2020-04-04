@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from "react";
+import React from "react";
 import classNames from "classnames/bind";
 import { IconName } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,32 +8,21 @@ import styles from "./Button.module.scss";
 const cx = classNames.bind(styles);
 
 type Props = {
+  type?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
   icon?: string;
-  justIcon?: boolean;
-  type?: "default" | "primary";
-  shape?: "square" | "round";
+  color?: "default" | "primary";
   loading?: boolean;
-  active?: boolean;
   onClick?: () => void;
 };
-const Button: React.FC<Props> = ({
-  children,
-  icon,
-  justIcon = false,
-  type = "default",
-  shape = "square",
-  loading = false,
-  active = false,
-  onClick,
-}) => {
+const Button: React.FC<Props> = ({ type, icon, color = "default", loading, onClick, children }) => {
   return (
-    <button className={cx("btn", { justIcon }, type, { active }, shape)} onClick={onClick}>
+    <button className={cx("btn", color)} onClick={onClick} type={type}>
       {loading ? (
         <FontAwesomeIcon icon="spinner" spin />
       ) : (
         !!icon && <FontAwesomeIcon icon={icon as IconName} />
       )}
-      {!justIcon && children}
+      {children}
     </button>
   );
 };

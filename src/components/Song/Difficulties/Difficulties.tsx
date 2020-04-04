@@ -10,10 +10,11 @@ const cx = classNames.bind(styles);
 
 type Props = {
   song: Song;
+  selected?: string;
   className?: string;
   onSelectDiff?: (diff: string) => void;
 };
-const Difficulties: React.FC<Props> = ({ song, className = "", onSelectDiff }) => {
+const Difficulties: React.FC<Props> = ({ song, selected, className = "", onSelectDiff }) => {
   const selectDiff = (diff: string) => {
     if (onSelectDiff) onSelectDiff(diff);
   };
@@ -52,7 +53,7 @@ const Difficulties: React.FC<Props> = ({ song, className = "", onSelectDiff }) =
         return (
           <span
             key={diff}
-            className={cx("difficultyTag", diff)}
+            className={cx("difficultyTag", diff, { selected: selected === diff })}
             onClick={() => selectDiff(diff)}
             style={{ cursor: onSelectDiff ? "pointer" : "initial" }}
           >

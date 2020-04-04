@@ -1,6 +1,5 @@
 import React from "react";
 import classNames from "classnames/bind";
-import { pipe, keys, equals, reject, path } from "ramda";
 
 import { ThumbUp, ThumbDown, AccountCircle } from "@material-ui/icons";
 

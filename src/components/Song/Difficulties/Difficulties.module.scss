@@ -12,19 +12,35 @@
   background: rgb(131, 131, 131);
   margin-right: 10px;
   font-size: 0.8em;
+  transition: all 0.3s ease-in-out;
   &.easy {
-    background: #80c883;
+    background: var(--easy-color);
+    &.selected {
+      box-shadow: 0 2px 7px var(--easy-color);
+    }
   }
   &.normal {
-    background: #80b2c8;
+    background: var(--normal-color);
+    &.selected {
+      box-shadow: 0 2px 7px var(--normal-color);
+    }
   }
   &.hard {
-    background: #c8b480;
+    background: var(--hard-color);
+    &.selected {
+      box-shadow: 0 2px 7px var(--hard-color);
+    }
   }
   &.expert {
-    background: #c88080;
+    background: var(--expert-color);
+    &.selected {
+      box-shadow: 0 2px 7px var(--expert-color);
+    }
   }
   &.expertPlus {
-    background: #db78de;
+    background: var(--expertPlus-color);
+    &.selected {
+      box-shadow: 0 2px 7px var(--expertPlus-color);
+    }
   }
 }

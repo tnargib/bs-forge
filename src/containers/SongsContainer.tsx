@@ -15,21 +15,19 @@ const SongsContainer: React.FC = () => {
     loadSongs();
   }, [loadSongs, order]);
 
+  console.log("allLoadingPages", songStore.loadingPages);
   return (
     <div>
       <SongList
+        search={songStore.search}
         order={order}
-        pages={songStore.songPages}
-        shrinked={!!songStore.currentSong}
+        pages={songStore.pages}
+        loadingPages={songStore.loadingPages}
         loadSongs={songStore.loadSongs}
         changeOrder={songStore.changeOrder}
         selectSong={songStore.selectSong}
       />
-      <SongDetailsSider
-        open={!!songStore.currentSong}
-        song={songStore.currentSong}
-        onClose={songStore.unselectSong}
-      />
+      <SongDetailsSider open={!!songStore.currentSong} onClose={songStore.unselectSong} />
     </div>
   );
 };
