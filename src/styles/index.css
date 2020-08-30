@@ -1,7 +1,51 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700&display=swap");
 
+@font-face {
+  font-family: "Beon";
+  font-display: swap;
+  src: local("Beon"), url("../assets//fonts/Beon/beon-webfont.woff");
+}
+
+@font-face {
+  font-family: "Teko";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: local("Teko Light"), local("Teko-Light"), url("../assets//fonts/Teko/Teko-Light.ttf");
+}
+@font-face {
+  font-family: "Teko";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local("Teko Regular"), local("Teko-Regular"), url("../assets//fonts/Teko/Teko-Regular.ttf");
+}
+@font-face {
+  font-family: "Teko";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: local("Teko Medium"), local("Teko-Medium"), url("../assets//fonts/Teko/Teko-Medium.ttf");
+}
+@font-face {
+  font-family: "Teko";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local("Teko SemiBold"), local("Teko-SemiBold"),
+    url("../assets//fonts/Teko/Teko-SemiBold.ttf");
+}
+@font-face {
+  font-family: "Teko";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local("Teko Bold"), local("Teko-Bold"), url("../assets//fonts/Teko/Teko-Bold.ttf");
+}
+
 html {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Teko", sans-serif;
+  /* font-family: "Montserrat", sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
@@ -10,6 +54,24 @@ html {
   --hard-color: #c8b480;
   --expert-color: #c88080;
   --expertPlus-color: #db78de;
+}
+h1 {
+  font-family: "Beon", sans-serif;
+}
+h2 {
+  font-family: "Beon", sans-serif;
+}
+h3 {
+  font-family: "Beon", sans-serif;
+}
+h4 {
+  font-family: "Beon", sans-serif;
+}
+h5 {
+  font-family: "Beon", sans-serif;
+}
+h6 {
+  font-family: "Beon", sans-serif;
 }
 
 body {

@@ -9,7 +9,7 @@ type RequestIdleCallbackDeadline = {
 
 interface Window {
   api: {
-    call<T, U>(channel: string, request: { command: string; params: T }): Promise<U | Error>;
+    call<T, U>(channel: string, request: { command: string; params: T }): Promise<U>;
     receive<T>(channel: string, fn: () => T): void;
   };
   requestIdleCallback: (

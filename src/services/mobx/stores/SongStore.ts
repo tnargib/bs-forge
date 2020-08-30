@@ -67,12 +67,11 @@ class SongStore {
         const isCurrent = () => this.currentSong && this.currentSong.key === song.key;
 
         const _handleProgress = (progressEvent: { loaded: number; total: number }) => {
+          if (!isCurrent()) return;
           const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          if (isCurrent()) {
-            runInAction(() => {
-              this.currentAudioPreviewProgress = percent;
-            });
-          }
+          runInAction(() => {
+            this.currentAudioPreviewProgress = percent;
+          });
         };
 
         const [audio, ratings] = await Promise.all([

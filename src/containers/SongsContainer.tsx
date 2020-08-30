@@ -4,7 +4,6 @@ import { observer } from "mobx-react";
 import { useStores } from "../services/mobx/useStores";
 
 import SongList from "../views/Songs/SongList/SongList";
-import SongDetailsSider from "../views/Songs/SongDetails/SongDetailsSider";
 
 const SongsContainer: React.FC = () => {
   const { songStore } = useStores();
@@ -27,7 +26,6 @@ const SongsContainer: React.FC = () => {
         changeOrder={songStore.changeOrder}
         selectSong={songStore.selectSong}
       />
-      <SongDetailsSider open={!!songStore.currentSong} onClose={songStore.unselectSong} />
     </div>
   );
 };

@@ -4,30 +4,19 @@
 const { BrowserWindow } = require("electron");
 const { download } = require("electron-dl");
 
-class DownloadChannel {
+const BaseIPC = require("./_BaseIPC");
+
+class DownloadChannel extends BaseIPC {
   getName() {
     return "download-channel";
   }
 
-  async handle(event, request) {
-    const data = await this.exec(request.params);
-    this.notify(event, request, data);
-  }
-
-  notify(event, request, data) {
-    event.sender.send(request.responseChannel, data);
-  }
-
-  async exec(params = {}) {
+  async downloadSong(params = {}) {
     const { url } = params;
 
-    try {
-      const win = BrowserWindow.getFocusedWindow();
-      const res = await download(win, url, { saveAs: true });
-      return res;
-    } catch (error) {
-      return error;
-    }
+    const win = BrowserWindow.getFocusedWindow();
+    const res = await download(win, url, { saveAs: true });
+    return res;
   }
 }
 

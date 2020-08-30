@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 
 import SongsContainer from "../../containers/SongsContainer";
 import ModsContainer from "../../containers/ModsContainer";
+import Settings from "../../views/Settings/Settings";
 
 import "./MainLayout.css";
 
@@ -15,7 +16,10 @@ const MainLayout: React.FC = () => {
       <Route path="/mods">
         <ModsContainer />
       </Route>
-      <Redirect to="/songs" />
+      <Route path="/settings">
+        <Settings />
+      </Route>
+      <Redirect to="/settings" />
     </Switch>
   );
 };

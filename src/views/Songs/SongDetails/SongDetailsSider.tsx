@@ -2,9 +2,11 @@ import React from "react";
 import { createPortal } from "react-dom";
 import classNames from "classnames/bind";
 import { useSpring, animated } from "react-spring";
+import { ThemeProvider } from "@material-ui/core/styles";
 
 import SongDetails from "./SongDetails";
 import SettingForm from "../../../components/Forms/SettingForm";
+import MuiDrawer from "../../../components/Drawer/Drawer";
 
 import { ChevronRight } from "@material-ui/icons";
 
@@ -29,25 +31,10 @@ const SongDetailsSider: React.FC<Props> = ({ open = false, onClose }) => {
     delay: 300,
   });
 
-  return createPortal(
-    <animated.div className={cx("SongDetailsSider")} style={wrapper}>
-      <animated.div style={content}>
-        <SettingForm />
-      </animated.div>
-      {/* <div
-        className={cx("closeSider")}
-        onClick={() => {
-          console.log("closing");
-          onClose();
-        }}
-      >
-        <ChevronRight />
-      </div>
-      <animated.div style={content}>
-        <SongDetails />
-      </animated.div> */}
-    </animated.div>,
-    el,
+  return (
+    <MuiDrawer>
+      <SongDetails />
+    </MuiDrawer>
   );
 };
 

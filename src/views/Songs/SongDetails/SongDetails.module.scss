@@ -45,12 +45,12 @@
   margin-bottom: 20px;
   width: 100%;
   outline: none;
+  audio {
+    width: 100%;
+  }
 }
 .progress {
   margin-bottom: 20px;
-  :global(.rc-progress-line-path) {
-    stroke: var(--primary-color);
-  }
 }
 .difficulties {
   margin-bottom: 20px;
@@ -65,7 +65,7 @@
 .stats {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   .stat {
     display: flex;
     flex-direction: column;
@@ -76,6 +76,9 @@
       width: auto;
       fill: #f6f6f6;
     }
+    &.easy {
+      background-color: rgba(var(--easy-color), 0.5);
+    }
   }
 }
 .ratings {
@@ -83,11 +86,10 @@
   flex-direction: column;
   margin-top: 20px;
   margin-bottom: 20px;
-  font-size: .8em;
-  :global(.rc-progress-line) {
-    margin-top: 10px;
+  font-size: 0.8em;
+  & > div {
+    margin-top: 5px;
     margin-bottom: 10px;
-    height: 2px;
   }
 }
 

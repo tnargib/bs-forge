@@ -10,11 +10,9 @@ export default class DownloadConnector {
   async downloadByUrl(url: string): Promise<{ data: string }> {
     try {
       const res = await this.api.call<{ url: string }, { data: string }>(this.channel, {
-        command: "download",
+        command: "downloadSong",
         params: { url },
       });
-
-      if (res instanceof Error) throw res;
 
       return res;
     } catch (error) {

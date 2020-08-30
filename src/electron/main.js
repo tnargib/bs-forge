@@ -2,13 +2,22 @@
 "use strict";
 
 const { app, BrowserWindow, ipcMain } = require("electron");
+const { default: installExtension, REACT_DEVELOPER_TOOLS } = require("electron-devtools-installer");
 
 const path = require("path");
 const url = require("url");
 
-const { DownloadChannel } = require("./IPC");
+const { DownloadChannel, FileSystemChannel } = require("./IPC");
 
 require("electron-reload")(__dirname);
+
+const isDev = process.env.NODE_ENV === "development";
+
+function loadExtensions() {
+  return installExtension(REACT_DEVELOPER_TOOLS)
+    .then(name => console.log(`Added Extension:  ${name}`))
+    .catch(err => console.log("An error occurred: ", err));
+}
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -27,16 +36,19 @@ function createWindow() {
     },
   });
 
-  const startUrl =
-    process.env.ELECTRON_START_URL ||
-    url.format({
-      pathname: path.join(__dirname, "../build/index.html"),
-      protocol: "file:",
-      slashes: true,
-    });
+  const startUrl = isDev
+    ? "http://localhost:3000"
+    : url.format({
+        pathname: path.join(__dirname, "../build/index.html"),
+        protocol: "file:",
+        slashes: true,
+      });
   mainWindow.loadURL(startUrl);
 
-  mainWindow.webContents.openDevTools();
+  if (isDev) {
+    mainWindow.webContents.openDevTools();
+    loadExtensions();
+  }
 
   mainWindow.on("closed", function() {
     // Dereference the window object, usually you would store windows
@@ -76,4 +88,4 @@ function init(ipcChannels) {
   registerIpcChannels(ipcChannels);
 }
 
-init([new DownloadChannel()]);
+init([new DownloadChannel(), new FileSystemChannel()]);
