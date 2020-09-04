@@ -14,7 +14,7 @@ type Props = {
   loading?: boolean;
   onClick?: () => void;
 };
-const Button: React.FC<Props> = ({ type, icon, color = "default", loading, onClick, children }) => {
+const Button: React.FC<Props> = ({ type, icon, color = "default", loading, onClick, children }) => {    
   return (
     <button className={cx("btn", color)} onClick={onClick} type={type}>
       {loading ? (

@@ -24,7 +24,7 @@ const App: React.FC = () => {
           <Route path="/settings">
             <Settings />
           </Route>
-          <Redirect to="/songs" />
+          <Redirect to="/settings" />
         </Switch>
       </BrowserRouter>
     </ThemeProvider>

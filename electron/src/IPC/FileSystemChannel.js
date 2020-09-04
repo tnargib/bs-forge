@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-"use strict";
-
 const { BrowserWindow } = require("electron");
 const { dialog } = require("electron");
 

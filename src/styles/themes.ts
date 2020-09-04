@@ -1,48 +1,5 @@
-import { CSSProperties } from "react";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { purple } from "@material-ui/core/colors";
-
-// import TekoLight from "../assets/fonts/Teko/Teko-Light.ttf";
-// import TekoRegular from "../assets/fonts/Teko/Teko-Regular.ttf";
-// import TekoMedium from "../assets/fonts/Teko/Teko-Medium.ttf";
-// import TekoSemiBold from "../assets/fonts/Teko/Teko-SemiBold.ttf";
-// import TekoBold from "../assets/fonts/Teko/Teko-Bold.ttf";
-
-// const tekoLight = {
-//   fontFamily: "Teko",
-//   fontStyle: "normal",
-//   fontWeight: 300,
-//   fontDisplay: "swap",
-//   src: `local('Teko Light'), local('Teko-Light'), url(${TekoLight}) format('woff2')`,
-// };
-// const tekoRegular = {
-//   fontFamily: "Teko",
-//   fontStyle: "normal",
-//   fontWeight: 400,
-//   fontDisplay: "swap",
-//   src: `local('Teko Regular'), local('Teko-Regular'), url(${TekoRegular}) format('woff2')`,
-// };
-// const tekoMedium = {
-//   fontFamily: "Teko",
-//   fontStyle: "normal",
-//   fontWeight: 500,
-//   fontDisplay: "swap",
-//   src: `local('Teko Medium'), local('Teko-Medium'), url(${TekoMedium}) format('woff2')`,
-// };
-// const tekoSemiBold = {
-//   fontFamily: "Teko",
-//   fontStyle: "normal",
-//   fontWeight: 600,
-//   fontDisplay: "swap",
-//   src: `local('Teko SemiBold'), local('Teko-SemiBold'), url(${TekoSemiBold}) format('woff2')`,
-// };
-// const tekoBold = {
-//   fontFamily: "Teko",
-//   fontStyle: "normal",
-//   fontWeight: 700,
-//   fontDisplay: "swap",
-//   src: `local('Teko Bold'), local('Teko-Bold'), url(${TekoBold}) format('woff2')`,
-// };
 
 export enum DifficultiesColors {
   Easy = "#80c883",

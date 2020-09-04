@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-"use strict";
-
 const { contextBridge, ipcRenderer } = require("electron");
 const { v4 } = require("uuid");
 
@@ -16,7 +13,7 @@ contextBridge.exposeInMainWorld("api", {
     // This method returns a promise which will be resolved when the response has arrived.
     return new Promise((resolve, reject) => {
       ipcRenderer.once(request.responseChannel, (event, response) => {
-        if (response.isError) {
+        if (response && response.isError) {
           reject(response.message);
         } else {
           resolve(response);

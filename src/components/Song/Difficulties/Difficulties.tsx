@@ -1,9 +1,9 @@
 import React from "react";
 import classNames from "classnames/bind";
 import { pipe, path, reject, equals, keys } from "ramda";
-import { createStyles, makeStyles, fade } from "@material-ui/core/styles";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
 
-import { FormControl, InputLabel, Select, MenuItem, Box } from "@material-ui/core";
+import { FormControl, Select, MenuItem } from "@material-ui/core";
 
 import { Song } from "../../../services/apis/BeatSaverApi";
 
@@ -96,7 +96,7 @@ const Difficulties: React.FC<Props> & { Select: React.FC<DifficultiesSelectProps
           case "normal":
             diffName = "normal";
             break;
-          case "default":
+          default:
             diffName = "unknown";
             break;
         }

@@ -2,31 +2,31 @@ import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react";
 import classNames from "classnames/bind";
 import { keys, head, reject, equals, pipe } from "ramda";
-import { withStyles, createStyles, makeStyles, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, makeStyles } from "@material-ui/core/styles";
 
 import {
   Button,
-  LinearProgress,
   Typography,
   CircularProgress,
   Box,
   Divider,
   Grid,
 } from "@material-ui/core";
+import { ThumbUp, ThumbDown, Favorite } from "@material-ui/icons";
 import { Rating } from "@material-ui/lab";
+
 import Difficulties from "../../../components/Song/Difficulties/Difficulties";
 import Player from "./Player";
 
-import { ThumbUp, ThumbDown, Favorite } from "@material-ui/icons";
 import { ReactComponent as BombIcon } from "../../../assets/img/icons/bomb.svg";
 import { ReactComponent as CubeIcon } from "../../../assets/img/icons/ice.svg";
 import { ReactComponent as WallIcon } from "../../../assets/img/icons/wall.svg";
 
 import { useStores } from "../../../services/mobx/useStores";
+import DownloadConnector from "../../../services/connectors/DownloadConnector";
 
 import styles from "./SongDetails.module.scss";
 
-import DownloadConnector from "../../../services/connectors/DownloadConnector";
 
 const cx = classNames.bind(styles);
 const DL = new DownloadConnector();
@@ -44,7 +44,6 @@ const useStyles = makeStyles(theme =>
   createStyles({
     stat: {
       backgroundColor: theme.palette.secondary.light,
-      // backgroundColor: fade(theme.palette.secondary.light, 0.2),
       padding: 15,
       borderRadius: 35,
     },
@@ -72,9 +71,9 @@ const SongDetails: React.FC<Props> = ({ style }) => {
       const diff: string = pipe(reject(equals(false)), keys, head)(song.metadata.difficulties);
       setDiff(diff);
     }
-  }, [song, setDiff]);
+  }, [song]);
 
-  const dlSong = () => {
+  const dlSong = (): void => {
     if (song)
       DL.downloadByUrl(process.env.REACT_APP_BEATSAVER_URL + song.downloadURL).then(data => {
         console.log("dlSong", data);

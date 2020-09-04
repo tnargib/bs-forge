@@ -1,8 +1,7 @@
 import React from "react";
-import debounce from "lodash.debounce";
-import { fade, makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 
-import { AppBar, Toolbar, InputBase, IconButton, Typography } from "@material-ui/core";
+import { AppBar, Toolbar, IconButton, Typography } from "@material-ui/core";
 
 import { Settings } from "@material-ui/icons";
 

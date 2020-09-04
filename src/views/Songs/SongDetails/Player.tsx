@@ -1,3 +1,6 @@
+// TODO: Remove this
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import React, { useState, useRef } from "react";
 import ReactPlayer, { ReactPlayerProps } from "react-player";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
@@ -5,7 +8,12 @@ import clsx from "clsx";
 
 import { Typography, Grid, Slider, IconButton, LinearProgress } from "@material-ui/core";
 
-import { VolumeDown, VolumeUp, PlayArrow, Pause } from "@material-ui/icons";
+import {
+  // VolumeDown,
+  // VolumeUp,
+  PlayArrow,
+  Pause,
+} from "@material-ui/icons";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -38,9 +46,9 @@ const Player: React.FC<Props> = ({ style = {}, cover, url, title, artist, previe
   const playerEl = useRef<ReactPlayer>(null);
 
   const [playing, setPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.8);
+  const [volume] = useState(0.8);
   const [played, setPlayed] = useState(0);
-  const [loaded, setLoaded] = useState(0);
+  // const [loaded, setLoaded] = useState(0);
   const [duration, setDuration] = useState(0);
   const [seeking, setSeeking] = useState(false);
   const [progress, setProgress] = useState<any>(null);
@@ -49,9 +57,9 @@ const Player: React.FC<Props> = ({ style = {}, cover, url, title, artist, previe
     setPlaying(!playing);
   };
 
-  const handleVolumeChange = (e: any, value: number | number[]) => {
-    setVolume(value as number);
-  };
+  // const handleVolumeChange = (e: any, value: number | number[]) => {
+  //   setVolume(value as number);
+  // };
 
   const handlePlay = () => {
     setPlaying(true);
@@ -79,7 +87,7 @@ const Player: React.FC<Props> = ({ style = {}, cover, url, title, artist, previe
     }
   };
 
-  const handleEnded = () => {
+  const handleEnded = (): void => {
     setPlaying(false);
   };
 
@@ -88,11 +96,11 @@ const Player: React.FC<Props> = ({ style = {}, cover, url, title, artist, previe
   };
 
   const formatSeconds = (nbSeconds: number) => {
-    let minutes = Math.floor(nbSeconds / 60) + "";
-    let seconds = Math.floor(nbSeconds % 60) + "";
-    if (minutes.length < 2) minutes = "0" + minutes;
-    if (seconds.length < 2) seconds = "0" + seconds;
-    return minutes + ":" + seconds;
+    let minutes = `${Math.floor(nbSeconds / 60)}`;
+    let seconds = `${Math.floor(nbSeconds % 60)}`;
+    if (minutes.length < 2) minutes = `0${minutes}`;
+    if (seconds.length < 2) seconds = `0${seconds}`;
+    return `${minutes}:${seconds}`;
   };
 
   const playedSecondsFormatted = progress ? formatSeconds(progress.playedSeconds) : null;

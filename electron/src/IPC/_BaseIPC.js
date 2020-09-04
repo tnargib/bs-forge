@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-"use strict";
-
 class BaseIPC {
   async handle(event, request) {
     const { command, params } = request;
@@ -25,7 +22,7 @@ class BaseIPC {
   error(error) {
     return {
       isError: true,
-      message: this.getName() + " : " + error.message,
+      message: `${this.getName()} : ${error.message}`,
     };
   }
 }

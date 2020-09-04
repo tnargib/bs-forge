@@ -52,7 +52,7 @@ const SongList: React.FC<Props> = ({
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [search, pages, loadSongs]);
+  }, [loadSongs, pages, search]);
 
   const allSongs: Song[] = flatten(pluck("docs", pages));
   const totalDocs = pages.length ? pages[0].totalDocs : 0;

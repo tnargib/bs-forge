@@ -17,7 +17,7 @@ const useStyles = makeStyles({
   },
 });
 
-const SongsContainer: React.FC = () => {
+const Songs: React.FC = () => {
   const classes = useStyles();
   const { songStore } = useStores();
 
@@ -52,4 +52,4 @@ const SongsContainer: React.FC = () => {
   );
 };
 
-export default observer(SongsContainer);
+export default observer(Songs);

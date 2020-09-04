@@ -1,17 +1,19 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-"use strict";
-
 const { app, BrowserWindow, ipcMain } = require("electron");
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require("electron-devtools-installer");
+const electronReload = require("electron-reload");
 
 const path = require("path");
 const url = require("url");
 
-const { DownloadChannel, FileSystemChannel } = require("./IPC");
-
-require("electron-reload")(__dirname);
+const { AppDataChannel, DownloadChannel, FileSystemChannel } = require("./IPC");
 
 const isDev = process.env.NODE_ENV === "development";
+
+if (isDev) {
+  electronReload(__dirname, {
+    electron: path.join(process.cwd(), "node_modules", ".bin", "electron"),
+  });
+}
 
 function loadExtensions() {
   return installExtension(REACT_DEVELOPER_TOOLS)
@@ -31,8 +33,8 @@ function createWindow() {
       nodeIntegration: false, // is default value after Electron v5
       contextIsolation: true, // protect against prototype pollution
       enableRemoteModule: false, // turn off remote
-      webSecurity: false, // BeatMods doesn't include Access-Control-Allow-Origin
-      preload: path.join(__dirname, "./preload.js"),
+      webSecurity: false, // BeatMods and bsaber doesn't include Access-Control-Allow-Origin
+      preload: path.join(__dirname, "preload.js"),
     },
   });
 
@@ -50,7 +52,7 @@ function createWindow() {
     loadExtensions();
   }
 
-  mainWindow.on("closed", function() {
+  mainWindow.on("closed", () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
@@ -88,4 +90,4 @@ function init(ipcChannels) {
   registerIpcChannels(ipcChannels);
 }
 
-init([new DownloadChannel(), new FileSystemChannel()]);
+init([new AppDataChannel(), new DownloadChannel(), new FileSystemChannel()]);

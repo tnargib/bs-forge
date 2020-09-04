@@ -1,29 +1,16 @@
 import React from "react";
-import classNames from "classnames/bind";
-import { useForm, ErrorMessage } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
 
-import {
-  FormControl,
-  InputLabel,
-  TextField,
-  Select,
-  Button,
-  MenuItem,
-  InputAdornment,
-  IconButton,
-} from "@material-ui/core";
+import { TextField, Button, InputAdornment, IconButton } from "@material-ui/core";
 import { FolderOpen } from "@material-ui/icons";
 
-import styles from "./Forms.module.scss";
-
 import { FileSystemConnector } from "../../services/connectors";
+import { Settings } from "../../services/connectors/AppDataConnector";
 
 const FILE = new FileSystemConnector();
 
-const cx = classNames.bind(styles);
-
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   root: {
     "display": "flex",
     "flexDirection": "column",
@@ -32,44 +19,35 @@ const useStyles = makeStyles(theme => ({
       minWidth: 150,
     },
   },
-}));
+});
 
-type FormData = {
-  gameLocation: string;
+type FormData = Settings;
+type Props = {
+  onSubmit(values: FormData): void;
 };
-type Props = {};
-const SettingForm: React.FC<Props> = () => {
+const SettingForm: React.FC<Props> = ({ onSubmit }) => {
   const classes = useStyles();
-  const { register, handleSubmit, errors } = useForm<FormData>();
-
-  const hiddenFileInput = React.useRef<HTMLInputElement>(null);
-
-  const onSubmit = (data: FormData) => {
-    console.log(data);
-  };
+  const { handleSubmit, errors, setValue, control } = useForm<FormData>();
 
   const handleSelectFolder = () => {
-    console.log("lol2");
-    FILE.selectFolder().then(res => {
-      console.log("lol");
-      console.log(res);
+    FILE.selectFolder().then(path => {
+      setValue("game_location", path || "", { shouldValidate: true });
     });
   };
 
   return (
     <form className={classes.root} onSubmit={handleSubmit(onSubmit)}>
-      {/* <TextField
+      <Controller
+        as={TextField}
+        control={control}
+        rules={{ required: "Game location is required" }}
+        name="game_location"
         label="Game location"
-        name="gameLocation"
-        error={!!errors.gameLocation}
-        ref={register({ required: "Game location is required" })}
-        helperText={errors.gameLocation && errors.gameLocation.message}
-      /> */}
-      <TextField
-        name="gameLocation"
-        label="Game location"
-        variant="outlined"
+        defaultValue=""
+        error={!!errors.game_location}
+        helperText={errors.game_location && errors.game_location.message}
         fullWidth
+        variant="outlined"
         margin="normal"
         InputProps={{
           endAdornment: (
@@ -81,23 +59,10 @@ const SettingForm: React.FC<Props> = () => {
           ),
         }}
       />
-      <input
-        type="file"
-        ref={hiddenFileInput}
-        onChange={e => console.log(e)}
-        webkitdirectory=""
-        style={{ display: "none" }}
-      />
 
-      <FormControl variant="outlined" margin="normal">
-        <InputLabel>Song indexing</InputLabel>
-        <Select label="Song indexing">
-          <MenuItem>Hash</MenuItem>
-          <MenuItem>Name</MenuItem>
-        </Select>
-      </FormControl>
-
-      <Button color="primary">Save</Button>
+      <Button type="submit" color="primary">
+        Save
+      </Button>
     </form>
   );
 };

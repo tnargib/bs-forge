@@ -1,22 +1,22 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { observer } from "mobx-react";
-import { makeStyles } from "@material-ui/core/styles";
 
 import { Toolbar, Container } from "@material-ui/core";
 
 import SettingsHeader from "./SettingsHeader";
 import SettingForm from "../../components/Forms/SettingForm";
 
-import { useStores } from "../../services/mobx/useStores";
+import AppDataConnector, {
+  Settings as SettingsType,
+} from "../../services/connectors/AppDataConnector";
 
-const useStyles = makeStyles({
-  content: {
-    display: "flex",
-  },
-});
+const APP_DATA = new AppDataConnector();
 
 const Settings: React.FC = () => {
-  const classes = useStyles();
+  const handleSubmit = (data: SettingsType): void => {
+    // TODO: Catch save error
+    APP_DATA.setSettings(data);
+  };
 
   return (
     <div>
@@ -24,7 +24,7 @@ const Settings: React.FC = () => {
       <Toolbar />
 
       <Container maxWidth="sm">
-        <SettingForm />
+        <SettingForm onSubmit={handleSubmit} />
       </Container>
     </div>
   );
