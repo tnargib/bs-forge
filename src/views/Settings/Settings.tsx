@@ -1,5 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
+import { useSnackbar } from "notistack";
 
 import { Toolbar, Container } from "@material-ui/core";
 
@@ -13,9 +14,12 @@ import AppDataConnector, {
 const APP_DATA = new AppDataConnector();
 
 const Settings: React.FC = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const handleSubmit = (data: SettingsType): void => {
-    // TODO: Catch save error
-    APP_DATA.setSettings(data);
+    APP_DATA.setSettings(data)
+      .then(() => enqueueSnackbar("Settings saved", { variant: "success" }))
+      .catch(() => enqueueSnackbar("Error saving settings", { variant: "error" }));
   };
 
   return (
